@@ -1,0 +1,127 @@
+
+<html lang="en">
+
+	<head>
+
+	    <meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="google-site-verification" content="HqXMSS9aQVWeHB-z3mOcTAfZ2ZDbxcTXHV1mWmc31vI" />
+
+
+		<title>Morse Test</title>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+		<link rel="icon" type="image/png" href="images/favicon-32x32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="images/favicon-16x16.png" sizes="16x16" />
+        <link rel="stylesheet" href="styles.css">
+        <link href="https://fonts.googleapis.com/css?family=Cookie|Lato&display=swap" rel="stylesheet">
+
+        <style>
+
+            body {
+                font-family: 'Lato', cursive;
+            }
+
+            #section-1 {
+                text-align: center;
+            }
+
+            input {
+                display: inline-block;
+            }
+
+            #text > div {
+                display: inline-block;
+            }
+
+            .morse-text {
+                margin-right: 10px;
+            }
+
+            #text > input {
+                width: 70px;
+            }
+
+            #submit {
+                display: none;
+            }
+
+            #timer {
+                font-size: 30px;
+            }
+
+		</style>
+	</head>
+
+	<body>
+
+        <div id="section-1">
+
+            <h1 id="header">Morse Test</h1>
+
+            <div id="text"></div>
+            <button id="start">Start</button>
+            <button id="submit">Submit</button>
+
+
+            <p id="timer"></p>
+
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="timer.js"></script>
+
+        <script>
+
+            var morseArray = ["•-", "-•••", "-•-•", "-••", "-•", "••-•", "--•", "••••", "••", ".---", "-•-", "•-••", "--", "-•", "---", "•--•", "--•-", "•-•", "•••", "-", "••-", "•••-", "•--", "-••-", "-•--", "--••"];
+            var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+            var morseTest = new Array();
+            var correct = new Array();
+
+            $("#start").click(function() {
+                restart();
+                var newHTML = "";
+                var rand;
+                morseTest = new Array();
+                correct = new Array();
+                for(let i=0; i<10; i++) {
+                    rand = Math.floor(Math.random() * 26);
+                    morseTest.push(morseArray[rand]);
+                    correct.push(alphabet[rand]);
+                }
+
+                for(let i=0; i<morseTest.length; i++) {
+                    newHTML += "<div class='morse-text'>" + morseTest[i] + " </div>" + "<input id='input-" + i + "'><br><br>";
+                }
+
+                $("#text").html(newHTML);
+                $("#start").html("Restart");
+                $("#submit").show();
+                start();
+            });
+
+            $("#submit").click(function() {
+
+                var allCorrect = true;
+
+                for(let i=0; i<morseTest.length; i++) {
+                    if($("#input-" + i).val().toLowerCase() != correct[i]) {
+                        $("#input-" + i).css("background-color", "red");
+                        allCorrect = false;
+                    } else {
+                        $("#input-" + i).css("background-color", "white");
+                    }
+                }
+
+                if(allCorrect) {
+                    stop();
+                }
+            });
+
+        </script>
+
+	</body>
+
+</html> 	
