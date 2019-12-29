@@ -51,6 +51,12 @@
                 font-size: 30px;
             }
 
+            #allCorrect {
+                color: green;
+                font-size: 25px;
+                display: none;
+            }
+
 		</style>
 	</head>
 
@@ -64,8 +70,9 @@
             <button id="start">Start</button>
             <button id="submit">Submit</button>
 
-
             <p id="timer"></p>
+
+            <p id="allCorrect">All Correct</p>
 
         </div>
 
@@ -92,9 +99,10 @@
                     correct.push(alphabet[rand]);
                 }
 
-                for(let i=0; i<morseTest.length; i++) {
+                for(let i=0; i<morseTest.length-1; i++) {
                     newHTML += "<div class='morse-text'>" + morseTest[i] + " </div>" + "<input id='input-" + i + "'><br><br>";
                 }
+                newHTML += "<div class='morse-text'>" + morseTest[morseTest.length-1] + " </div><input id='input-" + (morseTest.length-1) + "' onkeypress='return runScript(event)'><br><br>";
 
                 $("#text").html(newHTML);
                 $("#start").html("Restart");
@@ -105,10 +113,12 @@
             $("#submit").click(function() {
 
                 var allCorrect = true;
+                var numWrong = 0;
 
                 for(let i=0; i<morseTest.length; i++) {
                     if($("#input-" + i).val().toLowerCase() != correct[i]) {
                         $("#input-" + i).css("background-color", "red");
+                        numWrong++;
                         allCorrect = false;
                     } else {
                         $("#input-" + i).css("background-color", "white");
@@ -116,9 +126,22 @@
                 }
 
                 if(allCorrect) {
+                    $("#allCorrect").css("color", "green");
+                    $("#allCorrect").html("All Correct");
+                    $("#allCorrect").show();
                     stop();
+                } else {
+                    $("#allCorrect").css("color", "red");
+                    $("#allCorrect").html(numWrong + " Wrong");
+                    $("#allCorrect").show();
                 }
             });
+
+            function runScript(e) {
+                if (e.keyCode == 13) {
+                    $("#submit").click();
+                }
+            }
 
         </script>
 
