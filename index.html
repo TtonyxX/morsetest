@@ -100,13 +100,14 @@
                 }
 
                 for(let i=0; i<morseTest.length-1; i++) {
-                    newHTML += "<div class='morse-text'>" + morseTest[i] + " </div>" + "<input id='input-" + i + "'><br><br>";
+                    newHTML += "<div class='morse-text'>" + morseTest[i] + " </div><input id='input-" + i + "' onkeypress='return runScript(event)'><br><br>";
                 }
-                newHTML += "<div class='morse-text'>" + morseTest[morseTest.length-1] + " </div><input id='input-" + (morseTest.length-1) + "' onkeypress='return runScript(event)'><br><br>";
+                
 
                 $("#text").html(newHTML);
                 $("#start").html("Restart");
                 $("#submit").show();
+                $("#input-0").focus();
                 start();
             });
 
