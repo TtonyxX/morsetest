@@ -89,6 +89,8 @@
 
             $("#start").click(function() {
                 restart();
+                $("#allCorrect").hide();
+
                 var newHTML = "";
                 var rand;
                 morseTest = new Array();
@@ -99,10 +101,9 @@
                     correct.push(alphabet[rand]);
                 }
 
-                for(let i=0; i<morseTest.length-1; i++) {
+                for(let i=0; i<morseTest.length; i++) {
                     newHTML += "<div class='morse-text'>" + morseTest[i] + " </div><input id='input-" + i + "' onkeypress='return runScript(event)'><br><br>";
                 }
-                
 
                 $("#text").html(newHTML);
                 $("#start").html("Restart");
@@ -134,6 +135,7 @@
                 } else {
                     $("#allCorrect").css("color", "red");
                     $("#allCorrect").html(numWrong + " Wrong");
+                    console.log($("#allCorrect").html());
                     $("#allCorrect").show();
                 }
             });
